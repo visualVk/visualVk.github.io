@@ -20,19 +20,20 @@
     var CONFIG = {"hostname":"visualvk.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quic">
+  <meta name="description" content="题目链接 分析 使用动态规划解决  为什么？  题目要求求得是子序列在原字符串的个数，是不是可以首先联想到最长共子序列？ 其次，通过样例，\(s&#x3D;&#39;rabbbit&#39;,t&#x3D;&#39;rabbit&#39;\)，我们可以得到对于\(t\)之前的字符，\(rabi,rabbi,rabbbi\)均可以通过删除或者不删除多余的字符，得到\(rabbit\)，而中间我们可以看到一">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="https://visualvk.github.io/2021/03/08/hello-world/index.html">
+<meta property="og:title" content="115. 不同的子序列">
+<meta property="og:url" content="https://visualvk.github.io/2021/03/17/115-%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97/index.html">
 <meta property="og:site_name" content="visualVk blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quic">
+<meta property="og:description" content="题目链接 分析 使用动态规划解决  为什么？  题目要求求得是子序列在原字符串的个数，是不是可以首先联想到最长共子序列？ 其次，通过样例，\(s&#x3D;&#39;rabbbit&#39;,t&#x3D;&#39;rabbit&#39;\)，我们可以得到对于\(t\)之前的字符，\(rabi,rabbi,rabbbi\)均可以通过删除或者不删除多余的字符，得到\(rabbit\)，而中间我们可以看到一">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-03-08T02:19:39.074Z">
-<meta property="article:modified_time" content="2021-03-08T02:19:39.079Z">
+<meta property="article:published_time" content="2021-03-17T03:33:03.000Z">
+<meta property="article:modified_time" content="2021-03-17T04:36:25.827Z">
 <meta property="article:author" content="visualVk">
+<meta property="article:tag" content="dp">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://visualvk.github.io/2021/03/08/hello-world/">
+<link rel="canonical" href="https://visualvk.github.io/2021/03/17/115-%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97/">
 
 
 <script id="page-configurations">
@@ -45,7 +46,7 @@
   };
 </script>
 
-  <title>Hello World | visualVk blog</title>
+  <title>115. 不同的子序列 | visualVk blog</title>
   
 
 
@@ -160,7 +161,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/03/08/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/03/17/115-%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/icandoit.jpg">
@@ -173,7 +174,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World
+          115. 不同的子序列
         </h1>
 
         <div class="post-meta">
@@ -182,8 +183,18 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2021-03-08 10:19:39" itemprop="dateCreated datePublished" datetime="2021-03-08T10:19:39+08:00">2021-03-08</time>
+              <time title="Created: 2021-03-17 11:33:03 / Modified: 12:36:25" itemprop="dateCreated datePublished" datetime="2021-03-17T11:33:03+08:00">2021-03-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                </span>
             </span>
 
           
@@ -197,20 +208,47 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+        <p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/distinct-subsequences/">题目链接</a></p>
+<h2 id="分析">分析</h2>
+<p>使用动态规划解决</p>
+<ul>
+<li>为什么？
+<ul>
+<li>题目要求求得是<strong>子序列</strong>在原字符串的<strong>个数</strong>，是不是可以首先联想到最长共子序列？</li>
+<li>其次，通过样例，<span class="math inline">\(s=&#39;rabbbit&#39;,t=&#39;rabbit&#39;\)</span>，我们可以得到对于<span class="math inline">\(t\)</span>之前的字符，<span class="math inline">\(rabi,rabbi,rabbbi\)</span>均可以通过删除或者不删除多余的字符，得到<span class="math inline">\(rabbit\)</span>，而中间我们可以看到一些相关联的地方，<span class="math inline">\(rabbi\)</span>包含<span class="math inline">\(rabi\)</span>，也就是说，<span class="math inline">\(rabbi\)</span>可以从<span class="math inline">\(rabi\)</span>的状态转出</li>
+<li>综上，可以大致定下，使用动态规划解决该问题</li>
+</ul></li>
+<li>如何解决？
+<ul>
+<li>进行如下定义：
+<ul>
+<li>首先，<span class="math inline">\(dp[i][j],1\le i \le t.length(),1\le j \le s.length()\)</span>，这样就不需要考虑越界问题了</li>
+<li>其次，<span class="math inline">\(dp[i][j]=\)</span>在<span class="math inline">\(s\)</span>字符串中<span class="math inline">\([0,j-1]\)</span>部分中的子序列，为<span class="math inline">\(t\)</span>字符串中<span class="math inline">\([0,i-1]\)</span>部分的子串的个数</li>
+<li>另外，当<span class="math inline">\(i=1\)</span>，即<span class="math inline">\(t\)</span>的子串是空串时，<span class="math inline">\(dp[i][j]=1\)</span></li>
+</ul></li>
+<li>状态转移方程
+<ul>
+<li><span class="math display">\[dp[i][j] = \left\{\begin{align}
+  dp[i-1][j-1] +dp[i][j-1],t[i-1] = s[j-1]\\
+  dp[i][j-1],t[i-1]\ne s[j-1]\\
+\end{align}\right.\]</span></li>
+<li>方程的解释：
+<ul>
+<li><span class="math inline">\(t[i-1] = s[j-1]\)</span>时，说明<span class="math inline">\(dp[i][j]\)</span>的可以有两种地方转化过来，
+<ol type="1">
+<li><span class="math inline">\(dp[i-1][j-1]\)</span>：这种情况下假设的是，<span class="math inline">\(t[i-1]=s[j-1]\)</span></li>
+<li><span class="math inline">\(dp[i][j-1]\)</span>：这种情况假设的是<span class="math inline">\(t[i]=s[j-1]\)</span></li>
+</ol></li>
+<li><span class="math inline">\(t[i-1]\ne s[j-1]\)</span>时
+<ul>
+<li>就算<span class="math inline">\(t[i-2]=s[j-2]\)</span>，但由于<span class="math inline">\(t[i-1]\ne s[j-1]\)</span>，在<span class="math inline">\(s[0,j-1]\)</span>都找不到<span class="math inline">\(t[0,i-1]\)</span>的子序列，也就不够可能从<span class="math inline">\(dp[i-1][j-1]\)</span>的状态转移过来</li>
+<li>所以只可能是从<span class="math inline">\(t[i-1]=s[j-2]\)</span>情况，即<span class="math inline">\(dp[i][j-1]\)</span>的状态转移过来</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numDistinct</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line">      <span class="keyword">int</span> len1 = s.length(), len2 = t.length();</span><br><span class="line">      <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;ll&gt;&gt;dp(len2+<span class="number">1</span>,<span class="built_in">vector</span>&lt;ll&gt;(len1+<span class="number">1</span>,<span class="number">0</span>));</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;len1 + <span class="number">1</span>;i++)&#123;</span><br><span class="line">        dp[<span class="number">0</span>][i] = <span class="number">1</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i&lt;=len2;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>;j&lt;=len1;j++)&#123;</span><br><span class="line">          <span class="keyword">if</span>(t[i<span class="number">-1</span>] == s[j<span class="number">-1</span>])&#123;</span><br><span class="line">            dp[i][j] = dp[i<span class="number">-1</span>][j<span class="number">-1</span>] + dp[i][j<span class="number">-1</span>];</span><br><span class="line">          &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            dp[i][j] = dp[i][j<span class="number">-1</span>];</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> dp[len2][len1];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -219,17 +257,21 @@
     
 
       <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/dp/" rel="tag"><i class="fa fa-tag"></i> dp</a>
+          </div>
 
         
 
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2021/03/08/131-%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2II/" rel="next" title="131. 分割回文串II">
-      131. 分割回文串II <i class="fa fa-chevron-right"></i>
+    <a href="/2021/03/16/1107-Social-Clusters/" rel="prev" title="1107 Social Clusters">
+      <i class="fa fa-chevron-left"></i> 1107 Social Clusters
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -288,7 +330,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#quick-start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">分析</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -420,6 +462,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 <!-- calendar widget -->
