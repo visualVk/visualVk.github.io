@@ -155,7 +155,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/04/04/%E6%A3%AE%E6%9E%97%E4%B8%AD%E7%9A%84%E5%85%94%E5%AD%90/">
+    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/05/05/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86-%E5%B9%B6%E5%8F%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/icandoit.jpg">
@@ -169,7 +169,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/04/04/%E6%A3%AE%E6%9E%97%E4%B8%AD%E7%9A%84%E5%85%94%E5%AD%90/" class="post-title-link" itemprop="url">781.森林中的兔子</a>
+            <a href="/2021/05/05/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86-%E5%B9%B6%E5%8F%91/" class="post-title-link" itemprop="url">rust基础知识-并发</a>
         </h2>
 
         <div class="post-meta">
@@ -180,8 +180,531 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-04-04 07:54:50 / Modified: 08:17:19" itemprop="dateCreated datePublished" datetime="2021-04-04T07:54:50+08:00">2021-04-04</time>
+              <time title="Created: 2021-05-05 16:53:44 / Modified: 17:10:55" itemprop="dateCreated datePublished" datetime="2021-05-05T16:53:44+08:00">2021-05-05</time>
             </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">rust基础知识学习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="生成线程">生成线程</h2>
+<ul>
+<li>thread::spwan</li>
+<li>结合闭包进行使用，闭包最好带有move关键字，保证所有权的移动</li>
+<li>利用join方法，可以将一个线程个另一个线程进行同步化，当且仅当同步化后的线程全部完成，才会进行后续内容</li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">run_second_thread_in_this_context</span></span>() &#123;</span><br><span class="line">  <span class="keyword">let</span> handle = thread::spawn(<span class="keyword">move</span> || &#123;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span>..<span class="number">10</span> &#123;</span><br><span class="line">      <span class="built_in">println!</span>(<span class="string">&quot;hi, this is secondary thread, current value is &#123;&#125;&quot;</span>, i);</span><br><span class="line">      thread::sleep(Duration::from_millis(<span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span>..<span class="number">5</span> &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;hi, this is first thread, current value is &#123;&#125;&quot;</span>, i);</span><br><span class="line">    thread::sleep(Duration::from_millis(<span class="number">1</span>));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 如果注释以下代码，线程2会因为线程1结束，而提前结束</span></span><br><span class="line">  handle.join().unwrap();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="两种数据传递的方式">两种数据传递的方式</h2>
+<ul>
+<li>message send
+<ul>
+<li>概念：利用管道，进行信息传递</li>
+<li>mpsc::channel()作为通讯管道</li>
+<li>使用通讯管道的发送方（send），和接受方(recv)的方法进行发送或是接受</li>
+</ul></li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1发送，1接受</span></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">run_sm_sc_message_channel</span></span>() &#123;</span><br><span class="line">  <span class="keyword">let</span> (tx, rx) = mpsc::channel();</span><br><span class="line">  std::thread::spawn(<span class="keyword">move</span> || &#123;</span><br><span class="line">    <span class="keyword">let</span> vals = <span class="built_in">vec!</span>[</span><br><span class="line">      <span class="string">&quot;hi&quot;</span>.to_string(),</span><br><span class="line">      <span class="string">&quot;from&quot;</span>.to_string(),</span><br><span class="line">      <span class="string">&quot;the&quot;</span>.to_string(),</span><br><span class="line">      <span class="string">&quot;thread&quot;</span>.to_string(),</span><br><span class="line">    ];</span><br><span class="line">    <span class="keyword">for</span> val <span class="keyword">in</span> vals &#123;</span><br><span class="line">      tx.send(val).unwrap();</span><br><span class="line">      thread::sleep(Duration::from_secs(<span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> received <span class="keyword">in</span> rx &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;Got: &#123;&#125;&quot;</span>, received);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//n发送，1接受</span></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">run_mp_sc_message_channel</span></span>() &#123;</span><br><span class="line">  <span class="keyword">let</span> (tx, rx) = mpsc::channel();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> tx1 = tx.clone();<span class="comment">//利用clone进行复制多个发送方</span></span><br><span class="line"></span><br><span class="line">  std::thread::spawn(<span class="keyword">move</span> || &#123;</span><br><span class="line">    <span class="keyword">let</span> vals = <span class="built_in">vec!</span>[</span><br><span class="line">      <span class="string">&quot;hi&quot;</span>.to_string(),</span><br><span class="line">      <span class="string">&quot;from&quot;</span>.to_string(),</span><br><span class="line">      <span class="string">&quot;the&quot;</span>.to_string(),</span><br><span class="line">      <span class="string">&quot;thread&quot;</span>.to_string(),</span><br><span class="line">    ];</span><br><span class="line">    <span class="keyword">for</span> val <span class="keyword">in</span> vals &#123;</span><br><span class="line">      tx.send(val).unwrap();</span><br><span class="line">      thread::sleep(Duration::from_secs(<span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  std::thread::spawn(<span class="keyword">move</span> || &#123;</span><br><span class="line">    <span class="keyword">let</span> vals = <span class="built_in">vec!</span>[</span><br><span class="line">      <span class="string">&quot;more&quot;</span>.to_string(),</span><br><span class="line">      <span class="string">&quot;messages&quot;</span>.to_string(),</span><br><span class="line">      <span class="string">&quot;for&quot;</span>.to_string(),</span><br><span class="line">      <span class="string">&quot;your&quot;</span>.to_string(),</span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> val <span class="keyword">in</span> vals &#123;</span><br><span class="line">      tx1.send(val).unwrap();</span><br><span class="line">      thread::sleep(Duration::from_secs(<span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> received <span class="keyword">in</span> rx &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;Got: &#123;&#125;&quot;</span>, received);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>mutex
+<ul>
+<li>概念：利用线程锁，进行数据的访问限制</li>
+<li>mutex自带类似信息量的变量，可以限制访问，另外，mutex内的数据具有mutablity</li>
+<li>Arc具有原子性，代替Rc(非原子性)，在多线程中进行数据引用</li>
+</ul></li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">run_mutex</span></span>() &#123;</span><br><span class="line">  <span class="comment">//arc是原子性的rc</span></span><br><span class="line">  <span class="comment">//同时，mutex内部的变量，如同RefCell一样，可以进行内部修改</span></span><br><span class="line">  <span class="keyword">let</span> counter = Arc::new(Mutex::new(<span class="number">0</span>));</span><br><span class="line">  <span class="keyword">let</span> <span class="keyword">mut</span> handles = <span class="built_in">vec!</span>[];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="number">0</span>..<span class="number">10</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> counter = Arc::clone(&amp;counter);</span><br><span class="line">    <span class="keyword">let</span> handle = std::thread::spawn(<span class="keyword">move</span> || &#123;</span><br><span class="line">      <span class="keyword">let</span> <span class="keyword">mut</span> num = counter.lock().unwrap();</span><br><span class="line">      *num += <span class="number">1</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">    handles.push(handle);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> handle <span class="keyword">in</span> handles &#123;</span><br><span class="line">    handle.join().unwrap();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">println!</span>(<span class="string">&quot;result: &#123;&#125;&quot;</span>, *counter.lock().unwrap());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/05/02/linux/Kubuntu-ubuntu-%E4%B8%8B%E9%85%8D%E7%BD%AEclash/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icandoit.jpg">
+      <meta itemprop="name" content="visualVk">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="visualVk blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/02/linux/Kubuntu-ubuntu-%E4%B8%8B%E9%85%8D%E7%BD%AEclash/" class="post-title-link" itemprop="url">Kubuntu(ubuntu)下配置clash</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-05-02 23:29:21" itemprop="dateCreated datePublished" datetime="2021-05-02T23:29:21+08:00">2021-05-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-05-03 18:31:44" itemprop="dateModified" datetime="2021-05-03T18:31:44+08:00">2021-05-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux%E9%85%8D%E7%BD%AE/" itemprop="url" rel="index"><span itemprop="name">linux配置</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="梯子的重要性">梯子的重要性</h1>
+<p>​ 作为面向搜索引擎的优秀程序员，有个好的搜索引擎是必不可少的，所以梯子也就不可或缺</p>
+<h1 id="准备clash的环境">准备clash的环境</h1>
+<ol type="1">
+<li>下载clash</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://github.com/Dreamacro/clash">clash的github</a></p>
+<p>选择需要的版本，下图是我选择的</p>
+<figure>
+<img src="D:\coding\github_blogger\source_posts\linux\img\clash_version_selected.png" alt="" /><figcaption>clash_version_selected</figcaption>
+</figure>
+<p><strong>注意：如果出现github连接失败，选择自己去github上手动下载吧</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">wget</span> https://github.com/Dreamacro/clash/releases/download/v1.<span class="number">5.0</span>/clash<span class="literal">-linux</span><span class="literal">-amd64</span><span class="literal">-v1</span>.<span class="number">5.0</span>.gz</span><br></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li>解压gz&amp;&amp;重命名</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gzip clash<span class="literal">-linux</span><span class="literal">-amd64</span><span class="literal">-v1</span>.<span class="number">5.0</span>.gz <span class="literal">-d</span></span><br><span class="line"><span class="built_in">mv</span> clash<span class="literal">-linux</span><span class="literal">-amd64</span><span class="literal">-v1</span>.<span class="number">5.0</span> clash</span><br></pre></td></tr></table></figure>
+<ol start="3" type="1">
+<li>服务执行权限</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x clash</span><br></pre></td></tr></table></figure>
+<ol start="4" type="1">
+<li>测试clash</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./clash <span class="literal">-v</span></span><br></pre></td></tr></table></figure>
+<p>如果出现版本号，说明ok</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./clash</span><br></pre></td></tr></table></figure>
+<p>运行clash，让其自动生成配置文件，配置文件在~/.config/clash</p>
+<p>运行完后，放入代理商的yaml文件启动即可使用</p>
+<h1 id="设置clash.service">设置clash.service</h1>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /lib/systemd/system/clash<span class="selector-tag">@</span>.service</span><br></pre></td></tr></table></figure>
+<p>在文件中写入以下内容，无需改动</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">Unit</span>]</span><br><span class="line">Description=A rule based proxy <span class="keyword">in</span> Go <span class="keyword">for</span> %i.</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[<span class="type">Service</span>]</span><br><span class="line"><span class="built_in">Type</span>=simple</span><br><span class="line">User=%i</span><br><span class="line">Restart=on<span class="literal">-abort</span></span><br><span class="line">ExecStart=/usr/local/bin/clash</span><br><span class="line"></span><br><span class="line">[<span class="type">Install</span>]</span><br><span class="line">WantedBy=multi<span class="literal">-user</span>.target</span><br></pre></td></tr></table></figure>
+<p>重新加载服务</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon<span class="literal">-reload</span></span><br></pre></td></tr></table></figure>
+<p>启动clash服务</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#systemctl start clash@用户名，如我的用户名为visualvk则</span></span><br><span class="line">systemctl <span class="built_in">start</span> clash@visualvk</span><br></pre></td></tr></table></figure>
+<p>查看服务</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status clash@visualvk</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/05/02/leetcode/%E7%A0%96%E5%A2%99/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icandoit.jpg">
+      <meta itemprop="name" content="visualVk">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="visualVk blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/02/leetcode/%E7%A0%96%E5%A2%99/" class="post-title-link" itemprop="url">554. 砖墙</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-05-02 10:05:11 / Modified: 10:18:26" itemprop="dateCreated datePublished" datetime="2021-05-02T10:05:11+08:00">2021-05-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/brick-wall/">题目链接</a></p>
+<h1 id="题目大意">题目大意</h1>
+<p>​ 有一面砖墙，给定砖墙内砖块的宽度（同行的高度相同），问，垂线过砖块数的最小值</p>
+<h1 id="分析">分析</h1>
+<p>​ 直接求穿过砖块的最少数目，是很难求的，但是我们可以通过观察得到（记砖墙高度为<span class="math inline">\(h\)</span>，任意一条穿过砖墙的线，过砖块的数目为<span class="math inline">\(w\)</span>，未过砖块的数目为<span class="math inline">\(m\)</span>）：<span class="math inline">\(h=w+m\)</span>（没想到这个，就很难）</p>
+<p>​ 所以，我们可以将问题转换成求为穿过砖块数最多的问题，求得最大的<span class="math inline">\(m\)</span>，再通过<span class="math inline">\(w=h-m\)</span>求得所需的<span class="math inline">\(w\)</span>就可以了。</p>
+<h1 id="代码">代码</h1>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">leastBricks</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; wall)</span> </span>&#123;</span><br><span class="line">      <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;count_map;</span><br><span class="line">      <span class="keyword">int</span> wall_height = wall.size();</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;w : wall)&#123;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> n = w.size();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;n<span class="number">-1</span>;i++)&#123;</span><br><span class="line">          sum += w[i];</span><br><span class="line">          count_map[sum]++;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">int</span> max_blank = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;[_,v] : count_map)&#123;</span><br><span class="line">        max_blank = max(max_blank, v);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> wall_height - max_blank;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/04/29/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/%E9%97%AD%E5%8C%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icandoit.jpg">
+      <meta itemprop="name" content="visualVk">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="visualVk blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/29/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/%E9%97%AD%E5%8C%85/" class="post-title-link" itemprop="url">rust-闭包</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-04-29 10:01:25" itemprop="dateCreated datePublished" datetime="2021-04-29T10:01:25+08:00">2021-04-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-30 14:34:09" itemprop="dateModified" datetime="2021-04-30T14:34:09+08:00">2021-04-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">rust基础知识学习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="闭包定义">闭包定义</h1>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> experiment_closure = |x:&amp;<span class="built_in">str</span>|-&gt;&amp;<span class="built_in">str</span>&#123; <span class="string">&quot;123&quot;</span>&#125;;<span class="comment">//指定参数类型、返回值类型</span></span><br><span class="line"><span class="keyword">let</span> experiment_closure = |x:&amp;<span class="built_in">str</span>|&#123;<span class="string">&quot;123&quot;</span>&#125;;<span class="comment">//指定参数类型，隐式推断返回值类型</span></span><br><span class="line"><span class="keyword">let</span> experiment_closure = |x| <span class="string">&quot;123&quot;</span>;<span class="comment">//隐式推断参数类型、返回值类型</span></span><br><span class="line"><span class="keyword">let</span> experiment_closure = |x| x;<span class="comment">//隐式推断参数类型、返回值类型</span></span><br></pre></td></tr></table></figure>
+<p><strong>注意：闭包隐式推断，具有唯一性</strong></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> experiment_closure = |x| x;</span><br><span class="line"><span class="keyword">let</span> result = experiment_closure(<span class="built_in">String</span>::from(<span class="string">&quot;hello&quot;</span>));<span class="comment">//经过这一次调用，已经唯一确定x为String类型</span></span><br><span class="line"><span class="comment">//let result_int = experiment_closure(2); //error</span></span><br></pre></td></tr></table></figure>
+<h1 id="特点">特点</h1>
+<p>可以捕获上下文环境</p>
+<h1 id="迭代器定义">迭代器定义</h1>
+<p>惰性、需消费，否则相当于空气</p>
+<h1 id="几种迭代器">几种迭代器</h1>
+<ul>
+<li>iter()：不可变引用迭代器</li>
+<li>into_iter()：获得所有权迭代器</li>
+<li>iter_mut()：可变引用迭代器</li>
+</ul>
+<h1 id="几种产生迭代器适配器">几种产生迭代器适配器</h1>
+<ul>
+<li>map()：使用map产生迭代器，需要消耗，才会起作用，比如使用collect</li>
+<li>sum()</li>
+<li>filter()</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/04/28/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/rust%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icandoit.jpg">
+      <meta itemprop="name" content="visualVk">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="visualVk blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/28/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/rust%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" class="post-title-link" itemprop="url">rust单元测试</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-04-28 10:37:28 / Modified: 10:49:06" itemprop="dateCreated datePublished" datetime="2021-04-28T10:37:28+08:00">2021-04-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">rust基础知识学习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="常用指令">常用指令</h1>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 单元测试</span></span><br><span class="line">cargo test -- -<span class="literal">-show</span><span class="literal">-output</span> <span class="comment">#即便是成功的测试用例，也会显示中间输出内容</span></span><br><span class="line">cargo test -- -<span class="literal">-ignored</span> <span class="comment">#仅测试标记为ignore的测试用例</span></span><br><span class="line">cargo test [模块名，方法名，方法名一部分] <span class="comment">#执行对应的车市方法</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 集成测试</span></span><br><span class="line">cargo test -<span class="literal">-test</span> [文件名称，方法名称]</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/04/24/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/rust-%E6%89%80%E6%9C%89%E6%9D%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icandoit.jpg">
+      <meta itemprop="name" content="visualVk">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="visualVk blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/24/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/rust-%E6%89%80%E6%9C%89%E6%9D%83/" class="post-title-link" itemprop="url">rust-所有权</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-04-24 15:46:37 / Modified: 16:05:37" itemprop="dateCreated datePublished" datetime="2021-04-24T15:46:37+08:00">2021-04-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">rust基础知识学习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="所有权">所有权</h1>
+<p>一种管理变量的所定义的名词，它可以完成GC的垃圾回收功能（有点不同）。任何变量只属于一个所有者，超出所有者的scope就失效。</p>
+<h1 id="copy和drop">Copy和Drop</h1>
+<p>简单数据类型均具有copy，另外tuple中如果没有一个数据类型实现了drop方法，那么tuple就是Copy，但是，只要tuple中存在一个数据类型实现了drop，那么他就不再式Copy</p>
+<p>Drop作用于指针引用上，也就是涉及heap的数据类型。如，想要一个String类型，s1 = s2,就意味着值发生了移动（move），s2在赋值后，失效，后续代码中使用s2均会报错</p>
+<h1 id="引用和借用">引用和借用</h1>
+<p>引用：引用值，而不引用所有权</p>
+<p>借用：将引用作为参数的行为，称为借用</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/04/04/leetcode/%E6%A3%AE%E6%9E%97%E4%B8%AD%E7%9A%84%E5%85%94%E5%AD%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icandoit.jpg">
+      <meta itemprop="name" content="visualVk">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="visualVk blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/04/leetcode/%E6%A3%AE%E6%9E%97%E4%B8%AD%E7%9A%84%E5%85%94%E5%AD%90/" class="post-title-link" itemprop="url">781.森林中的兔子</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-04-04 07:54:50" itemprop="dateCreated datePublished" datetime="2021-04-04T07:54:50+08:00">2021-04-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-05-02 10:24:04" itemprop="dateModified" datetime="2021-05-02T10:24:04+08:00">2021-05-02</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -237,7 +760,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/03/17/115-%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97/">
+    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/03/17/leetcode/115-%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/icandoit.jpg">
@@ -251,7 +774,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/17/115-%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97/" class="post-title-link" itemprop="url">115. 不同的子序列</a>
+            <a href="/2021/03/17/leetcode/115-%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97/" class="post-title-link" itemprop="url">115. 不同的子序列</a>
         </h2>
 
         <div class="post-meta">
@@ -260,10 +783,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-03-17 11:33:03 / Modified: 12:36:25" itemprop="dateCreated datePublished" datetime="2021-03-17T11:33:03+08:00">2021-03-17</time>
+              <time title="Created: 2021-03-17 11:33:03" itemprop="dateCreated datePublished" datetime="2021-03-17T11:33:03+08:00">2021-03-17</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-05-02 10:24:59" itemprop="dateModified" datetime="2021-05-02T10:24:59+08:00">2021-05-02</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -286,7 +815,7 @@
 
       
           <p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/distinct-subsequences/">题目链接</a></p>
-<h2 id="分析">分析</h2>
+<h1 id="分析">分析</h1>
 <p>使用动态规划解决</p>
 <ul>
 <li>为什么？
@@ -325,6 +854,7 @@
 </ul></li>
 </ul></li>
 </ul>
+<h1 id="代码">代码</h1>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numDistinct</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line">      <span class="keyword">int</span> len1 = s.length(), len2 = t.length();</span><br><span class="line">      <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;ll&gt;&gt;dp(len2+<span class="number">1</span>,<span class="built_in">vector</span>&lt;ll&gt;(len1+<span class="number">1</span>,<span class="number">0</span>));</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;len1 + <span class="number">1</span>;i++)&#123;</span><br><span class="line">        dp[<span class="number">0</span>][i] = <span class="number">1</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i&lt;=len2;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>;j&lt;=len1;j++)&#123;</span><br><span class="line">          <span class="keyword">if</span>(t[i<span class="number">-1</span>] == s[j<span class="number">-1</span>])&#123;</span><br><span class="line">            dp[i][j] = dp[i<span class="number">-1</span>][j<span class="number">-1</span>] + dp[i][j<span class="number">-1</span>];</span><br><span class="line">          &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            dp[i][j] = dp[i][j<span class="number">-1</span>];</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> dp[len2][len1];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
       
@@ -345,7 +875,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/03/16/1107-Social-Clusters/">
+    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/03/16/leetcode/1107-Social-Clusters/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/icandoit.jpg">
@@ -359,7 +889,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/16/1107-Social-Clusters/" class="post-title-link" itemprop="url">1107 Social Clusters</a>
+            <a href="/2021/03/16/leetcode/1107-Social-Clusters/" class="post-title-link" itemprop="url">1107 Social Clusters</a>
         </h2>
 
         <div class="post-meta">
@@ -430,7 +960,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/03/15/1106-Lowest-Price-in-Supply-Chain/">
+    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/03/15/leetcode/1106-Lowest-Price-in-Supply-Chain/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/icandoit.jpg">
@@ -444,7 +974,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/15/1106-Lowest-Price-in-Supply-Chain/" class="post-title-link" itemprop="url">1106 Lowest Price in Supply Chain</a>
+            <a href="/2021/03/15/leetcode/1106-Lowest-Price-in-Supply-Chain/" class="post-title-link" itemprop="url">1106 Lowest Price in Supply Chain</a>
         </h2>
 
         <div class="post-meta">
@@ -509,255 +1039,11 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/03/11/1099-Build-A-Binary-Search-Tree%E9%A2%98%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icandoit.jpg">
-      <meta itemprop="name" content="visualVk">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="visualVk blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/11/1099-Build-A-Binary-Search-Tree%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">1099 Build A Binary Search Tree题解</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-03-11 21:41:32 / Modified: 22:53:04" itemprop="dateCreated datePublished" datetime="2021-03-11T21:41:32+08:00">2021-03-11</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/pat/" itemprop="url" rel="index"><span itemprop="name">pat</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a target="_blank" rel="noopener" href="http://localhost:4000/2021/03/08/article-title/">题目链接</a></p>
-<h2 id="大意">大意</h2>
-<p>给定一颗二叉搜索树的树型，以及一组数据，要求将这一组数据填充到该树型中，在层次遍历这棵树</p>
-<h2 id="思路">思路</h2>
-<ol type="1">
-<li>将数据从小到大排序</li>
-<li>通过先序遍历（递归型），依次将数据填入即可
-<ul>
-<li>可能有人会问这里为什么按先序遍历填入就可以？</li>
-<li>首先，我们要认识到二叉搜索树的特点，左孩子比根节点小，右孩子比根节点大</li>
-<li>所以，通过先序遍历，依次将排序好的数组填入，刚好就可以满足要求</li>
-</ul></li>
-<li>最后，通过bfs，层次遍历即可</li>
-</ol>
-<h2 id="代码">代码</h2>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * @Author: your name</span></span><br><span class="line"><span class="comment"> * @Date: 2020-07-30 18:03:45</span></span><br><span class="line"><span class="comment"> * @LastEditTime: 2021-03-11 21:28:46</span></span><br><span class="line"><span class="comment"> * @LastEditors: Please set LastEditors</span></span><br><span class="line"><span class="comment"> * @Description: In User Settings Edit</span></span><br><span class="line"><span class="comment"> * @FilePath: \datastruct_kaoyan\main.cpp</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> debug</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> dbg(x) cout &lt;&lt; #x &lt;&lt; <span class="meta-string">&quot; = &quot;</span> &lt;&lt; (x) &lt;&lt; endl;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">pair</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; pii;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">pair</span>&lt;ll, ll&gt; PLL;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">pair</span>&lt;<span class="keyword">int</span>, ll&gt; Pil;</span><br><span class="line"><span class="keyword">const</span> ll INF = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> inf = <span class="number">1e8</span> + <span class="number">100</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> eps = <span class="number">1e-8</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">1e5</span> + <span class="number">100</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1e3</span> + <span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> ll mod = <span class="number">1e9</span> + <span class="number">7</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> cur)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">()</span></span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">  <span class="keyword">int</span> left, right, data;</span><br><span class="line">  node() &#123;&#125;</span><br><span class="line">  node(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> d) : left(l), right(r), data(d) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">vector</span>&lt;node&gt; tree;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; tree_value;</span><br><span class="line"><span class="keyword">int</span> ind;</span><br><span class="line"><span class="comment">// solve</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> n;</span><br><span class="line">  ind = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">  tree.assign(n, node(<span class="number">-1</span>, <span class="number">-1</span>, <span class="number">0</span>));</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    <span class="keyword">int</span> left, right;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;left, &amp;right);</span><br><span class="line">    <span class="comment">// printf(&quot;left:%d,right:%d\n&quot;, left, right);</span></span><br><span class="line">    tree[i] = node(left, right, <span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    <span class="keyword">int</span> temp;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;temp);</span><br><span class="line">    tree_value.push_back(temp);</span><br><span class="line">  &#125;</span><br><span class="line">  sort(tree_value.begin(), tree_value.end());</span><br><span class="line">  dfs(<span class="number">0</span>);</span><br><span class="line">  bfs();</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> cur)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (tree[cur].left == <span class="number">-1</span> &amp;&amp; tree[cur].right == <span class="number">-1</span>) &#123;</span><br><span class="line">    tree[cur].data = tree_value[ind++];</span><br><span class="line">    <span class="comment">// printf(&quot;cur:%d,value:%d\n&quot;, cur, tree[cur].data);</span></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (tree[cur].left != <span class="number">-1</span>)</span><br><span class="line">    dfs(tree[cur].left);</span><br><span class="line">  tree[cur].data = tree_value[ind++];</span><br><span class="line">  <span class="comment">// printf(&quot;cur:%d,value:%d\n&quot;, cur, tree[cur].data);</span></span><br><span class="line">  <span class="keyword">if</span> (tree[cur].right != <span class="number">-1</span>)</span><br><span class="line">    dfs(tree[cur].right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; que;</span><br><span class="line">  que.push(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">while</span> (!que.empty()) &#123;</span><br><span class="line">    <span class="keyword">int</span> top = que.front();</span><br><span class="line">    que.pop();</span><br><span class="line">    <span class="keyword">if</span> (top == <span class="number">-1</span>)</span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    <span class="keyword">if</span> (top == <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, tree[top].data);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot; %d&quot;</span>, tree[top].data);</span><br><span class="line">    &#125;</span><br><span class="line">    que.push(tree[top].left);</span><br><span class="line">    que.push(tree[top].right);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// main</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// ios_base::sync_with_stdio(false);</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> debug</span></span><br><span class="line">  freopen(<span class="string">&quot;in.txt&quot;</span>, <span class="string">&quot;r&quot;</span>, <span class="built_in">stdin</span>);</span><br><span class="line"><span class="comment">//	freopen(&quot;out.txt&quot;,&quot;w&quot;,stdout);</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">  <span class="comment">// cin.tie(0);</span></span><br><span class="line">  <span class="comment">// cout.tie(0);</span></span><br><span class="line">  solve();</span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">          #ifdef debug</span></span><br><span class="line"><span class="comment">                  fclose(stdin);</span></span><br><span class="line"><span class="comment">                  fclose(stdout);</span></span><br><span class="line"><span class="comment">                  system(&quot;out.txt&quot;);</span></span><br><span class="line"><span class="comment">          #endif</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/03/08/131-%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2II/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icandoit.jpg">
-      <meta itemprop="name" content="visualVk">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="visualVk blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/08/131-%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2II/" class="post-title-link" itemprop="url">131. 分割回文串II</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-03-08 10:27:51" itemprop="dateCreated datePublished" datetime="2021-03-08T10:27:51+08:00">2021-03-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-03-11 23:00:45" itemprop="dateModified" datetime="2021-03-11T23:00:45+08:00">2021-03-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/palindrome-partitioning-ii/">题目地址</a></p>
-<h2 id="思路">思路：</h2>
-<ul>
-<li>先定义一个<span class="math inline">\(dp[i][j]\)</span> = 字符串<span class="math inline">\(s\)</span>中<span class="math inline">\(i\)</span>到<span class="math inline">\(j\)</span>部分的子串是否为回文</li>
-<li><span class="math inline">\(dp[i][j]\)</span>需要从后往前遍历，这个是个注意点，如果从前往后，会出现如下情况
-<ul>
-<li>当我要判断0-3这一段字串是否为回文时，会使用到[1,1]这个区间的字串是否会回文，而由于是从前完后，所以再0<span class="math inline">\(\rightarrow\)</span>n遍历完之前，[1,1]这一段是没有做过处理，也就不知道是否为回文</li>
-</ul></li>
-<li>然后，我们再定义一个<span class="math inline">\(ans[i]\)</span>=前i个分割成回文的最小次数，其中会遇到两种情况
-<ul>
-<li><span class="math inline">\(dp[0][i]\)</span>=回文，不用分割，既为回文，所以<span class="math inline">\(ans[i]=0\)</span></li>
-<li><span class="math inline">\(dp[0][i]\ne\)</span>回文，我们需要遍历[0,i]区间，找到一个分界点，从这个分界点，分成两个回文
-<ul>
-<li>转移方程：<span class="math inline">\(ans[i] = min(ans[i], ans[j]),when\)</span> <span class="math inline">\(0&lt;j&lt;i,dp[j+1][i]=\)</span>回文</li>
-<li>j+1是因为，ans[i]的第一是前i个分割成回文的最小次数，所以要判断[j+1,i]区间是否为回文</li>
-</ul></li>
-</ul></li>
-</ul>
-<h2 id="代码">代码</h2>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minCut</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">int</span> n = s.length();</span><br><span class="line">      <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp(n, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n,<span class="number">1</span>));</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> i = n<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = i+<span class="number">1</span>;j&lt;n;j++)&#123;</span><br><span class="line">          dp[i][j] = dp[i+<span class="number">1</span>][j<span class="number">-1</span>] &amp; (s[i] == s[j]);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;ans(n,INT_MAX);</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(dp[<span class="number">0</span>][i])&#123;</span><br><span class="line">          ans[i] = <span class="number">0</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j&lt;i;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(dp[j+<span class="number">1</span>][i])&#123;</span><br><span class="line">              ans[i] = min(ans[i], ans[j] + <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> ans[n<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/03/08/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icandoit.jpg">
-      <meta itemprop="name" content="visualVk">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="visualVk blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/08/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-03-08 10:19:39" itemprop="dateCreated datePublished" datetime="2021-03-08T10:19:39+08:00">2021-03-08</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
 
 
 
@@ -824,20 +1110,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

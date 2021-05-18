@@ -20,21 +20,24 @@
     var CONFIG = {"hostname":"visualvk.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="题目链接 分析  首先，容易得出的是：answer数组中不同数字的，一定不是同种颜色 其次，可得到：answer数组中相同数字，可能是同种颜色，但是会有例外，比如[1,1,1]，虽然相同数字，但是必定有2种颜色。  对于第二种情况，进行如下处理：  相同数字为\(y\)，该数字个数为\(x\)， 可以先假设，所有相同数字是同一种颜色，算出如果为同一种颜色，至少有多只相同颜色的兔子">
+  <meta name="description" content="梯子的重要性 ​ 作为面向搜索引擎的优秀程序员，有个好的搜索引擎是必不可少的，所以梯子也就不可或缺 准备clash的环境  下载clash  clash的github 选择需要的版本，下图是我选择的  clash_version_selected  注意：如果出现github连接失败，选择自己去github上手动下载吧 1wget https:&#x2F;&#x2F;github.com&#x2F;Dr">
 <meta property="og:type" content="article">
-<meta property="og:title" content="781.森林中的兔子">
-<meta property="og:url" content="https://visualvk.github.io/2021/04/04/%E6%A3%AE%E6%9E%97%E4%B8%AD%E7%9A%84%E5%85%94%E5%AD%90/index.html">
+<meta property="og:title" content="Kubuntu(ubuntu)下配置clash">
+<meta property="og:url" content="https://visualvk.github.io/2021/05/02/linux/Kubuntu-ubuntu-%E4%B8%8B%E9%85%8D%E7%BD%AEclash/index.html">
 <meta property="og:site_name" content="visualVk blog">
-<meta property="og:description" content="题目链接 分析  首先，容易得出的是：answer数组中不同数字的，一定不是同种颜色 其次，可得到：answer数组中相同数字，可能是同种颜色，但是会有例外，比如[1,1,1]，虽然相同数字，但是必定有2种颜色。  对于第二种情况，进行如下处理：  相同数字为\(y\)，该数字个数为\(x\)， 可以先假设，所有相同数字是同一种颜色，算出如果为同一种颜色，至少有多只相同颜色的兔子">
+<meta property="og:description" content="梯子的重要性 ​ 作为面向搜索引擎的优秀程序员，有个好的搜索引擎是必不可少的，所以梯子也就不可或缺 准备clash的环境  下载clash  clash的github 选择需要的版本，下图是我选择的  clash_version_selected  注意：如果出现github连接失败，选择自己去github上手动下载吧 1wget https:&#x2F;&#x2F;github.com&#x2F;Dr">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-04-03T23:54:50.000Z">
-<meta property="article:modified_time" content="2021-04-04T00:17:19.093Z">
+<meta property="og:image" content="d:/coding/github_blogger/source_posts/linux/img/clash_version_selected.png">
+<meta property="article:published_time" content="2021-05-02T15:29:21.000Z">
+<meta property="article:modified_time" content="2021-05-03T10:31:44.069Z">
 <meta property="article:author" content="visualVk">
-<meta property="article:tag" content="哈希表">
-<meta property="article:tag" content="思维题">
+<meta property="article:tag" content="clash">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="代理">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:/coding/github_blogger/source_posts/linux/img/clash_version_selected.png">
 
-<link rel="canonical" href="https://visualvk.github.io/2021/04/04/%E6%A3%AE%E6%9E%97%E4%B8%AD%E7%9A%84%E5%85%94%E5%AD%90/">
+<link rel="canonical" href="https://visualvk.github.io/2021/05/02/linux/Kubuntu-ubuntu-%E4%B8%8B%E9%85%8D%E7%BD%AEclash/">
 
 
 <script id="page-configurations">
@@ -47,7 +50,7 @@
   };
 </script>
 
-  <title>781.森林中的兔子 | visualVk blog</title>
+  <title>Kubuntu(ubuntu)下配置clash | visualVk blog</title>
   
 
 
@@ -162,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/04/04/%E6%A3%AE%E6%9E%97%E4%B8%AD%E7%9A%84%E5%85%94%E5%AD%90/">
+    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/05/02/linux/Kubuntu-ubuntu-%E4%B8%8B%E9%85%8D%E7%BD%AEclash/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/icandoit.jpg">
@@ -175,7 +178,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          781.森林中的兔子
+          Kubuntu(ubuntu)下配置clash
         </h1>
 
         <div class="post-meta">
@@ -184,17 +187,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-04-04 07:54:50 / Modified: 08:17:19" itemprop="dateCreated datePublished" datetime="2021-04-04T07:54:50+08:00">2021-04-04</time>
+              <time title="Created: 2021-05-02 23:29:21" itemprop="dateCreated datePublished" datetime="2021-05-02T23:29:21+08:00">2021-05-02</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-05-03 18:31:44" itemprop="dateModified" datetime="2021-05-03T18:31:44+08:00">2021-05-03</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                  <a href="/categories/linux%E9%85%8D%E7%BD%AE/" itemprop="url" rel="index"><span itemprop="name">linux配置</span></a>
                 </span>
             </span>
 
@@ -209,21 +218,45 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/rabbits-in-forest/">题目链接</a></p>
-<h2 id="分析">分析</h2>
-<ul>
-<li>首先，容易得出的是：answer数组中不同数字的，一定不是同种颜色</li>
-<li>其次，可得到：answer数组中相同数字，可能是同种颜色，但是会有例外，比如[1,1,1]，虽然相同数字，但是必定有2种颜色。</li>
-</ul>
-<p>对于第二种情况，进行如下处理：</p>
-<ul>
-<li><p>相同数字为<span class="math inline">\(y\)</span>，该数字个数为<span class="math inline">\(x\)</span>，</p></li>
-<li><p>可以先假设，所有相同数字是同一种颜色，算出如果为同一种颜色，至少有多只相同颜色的兔子。比如[1,1,1]，可以得到至少有<span class="math inline">\(1+3=4\)</span>，至少4只兔子，换成<span class="math inline">\(y,x\)</span>就是<span class="math inline">\(y+x\)</span></p></li>
-<li><p>但是显然，对于[1,1,1]这种情况，是肯定不止一种颜色，需要将1进行分组，而<span class="math inline">\(4/2=2\)</span>就可以得到最小分组数为2，换成<span class="math inline">\(y,x\)</span>就是<span class="math inline">\((y+x)/(y+1)\)</span></p></li>
-<li><p>最后将得到的分组数，乘上组内个数<span class="math inline">\(2\times 2=4\)</span>得到相同数字至少要分成2组，总共4只，换成<span class="math inline">\(y,x\)</span>就是<span class="math inline">\((y+x)/(y+1)*(y+1)\)</span></p></li>
-</ul>
-<h2 id="代码">代码</h2>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numRabbits</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; answers)</span> </span>&#123;</span><br><span class="line">      <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;mp;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;y : answers)&#123;</span><br><span class="line">        mp[y]++;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">auto</span> &amp;[y,x] : mp)&#123;</span><br><span class="line">        ans += (y+x)/(y+<span class="number">1</span>)*(y+<span class="number">1</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+        <h1 id="梯子的重要性">梯子的重要性</h1>
+<p>​ 作为面向搜索引擎的优秀程序员，有个好的搜索引擎是必不可少的，所以梯子也就不可或缺</p>
+<h1 id="准备clash的环境">准备clash的环境</h1>
+<ol type="1">
+<li>下载clash</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://github.com/Dreamacro/clash">clash的github</a></p>
+<p>选择需要的版本，下图是我选择的</p>
+<figure>
+<img src="D:\coding\github_blogger\source_posts\linux\img\clash_version_selected.png" alt="" /><figcaption>clash_version_selected</figcaption>
+</figure>
+<p><strong>注意：如果出现github连接失败，选择自己去github上手动下载吧</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">wget</span> https://github.com/Dreamacro/clash/releases/download/v1.<span class="number">5.0</span>/clash<span class="literal">-linux</span><span class="literal">-amd64</span><span class="literal">-v1</span>.<span class="number">5.0</span>.gz</span><br></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li>解压gz&amp;&amp;重命名</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gzip clash<span class="literal">-linux</span><span class="literal">-amd64</span><span class="literal">-v1</span>.<span class="number">5.0</span>.gz <span class="literal">-d</span></span><br><span class="line"><span class="built_in">mv</span> clash<span class="literal">-linux</span><span class="literal">-amd64</span><span class="literal">-v1</span>.<span class="number">5.0</span> clash</span><br></pre></td></tr></table></figure>
+<ol start="3" type="1">
+<li>服务执行权限</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x clash</span><br></pre></td></tr></table></figure>
+<ol start="4" type="1">
+<li>测试clash</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./clash <span class="literal">-v</span></span><br></pre></td></tr></table></figure>
+<p>如果出现版本号，说明ok</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./clash</span><br></pre></td></tr></table></figure>
+<p>运行clash，让其自动生成配置文件，配置文件在~/.config/clash</p>
+<p>运行完后，放入代理商的yaml文件启动即可使用</p>
+<h1 id="设置clash.service">设置clash.service</h1>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /lib/systemd/system/clash<span class="selector-tag">@</span>.service</span><br></pre></td></tr></table></figure>
+<p>在文件中写入以下内容，无需改动</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">Unit</span>]</span><br><span class="line">Description=A rule based proxy <span class="keyword">in</span> Go <span class="keyword">for</span> %i.</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[<span class="type">Service</span>]</span><br><span class="line"><span class="built_in">Type</span>=simple</span><br><span class="line">User=%i</span><br><span class="line">Restart=on<span class="literal">-abort</span></span><br><span class="line">ExecStart=/usr/local/bin/clash</span><br><span class="line"></span><br><span class="line">[<span class="type">Install</span>]</span><br><span class="line">WantedBy=multi<span class="literal">-user</span>.target</span><br></pre></td></tr></table></figure>
+<p>重新加载服务</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon<span class="literal">-reload</span></span><br></pre></td></tr></table></figure>
+<p>启动clash服务</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#systemctl start clash@用户名，如我的用户名为visualvk则</span></span><br><span class="line">systemctl <span class="built_in">start</span> clash@visualvk</span><br></pre></td></tr></table></figure>
+<p>查看服务</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status clash@visualvk</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -234,8 +267,9 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/" rel="tag"><i class="fa fa-tag"></i> 哈希表</a>
-              <a href="/tags/%E6%80%9D%E7%BB%B4%E9%A2%98/" rel="tag"><i class="fa fa-tag"></i> 思维题</a>
+              <a href="/tags/clash/" rel="tag"><i class="fa fa-tag"></i> clash</a>
+              <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+              <a href="/tags/%E4%BB%A3%E7%90%86/" rel="tag"><i class="fa fa-tag"></i> 代理</a>
           </div>
 
         
@@ -244,10 +278,13 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/03/17/115-%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97/" rel="prev" title="115. 不同的子序列">
-      <i class="fa fa-chevron-left"></i> 115. 不同的子序列
+    <a href="/2021/05/02/leetcode/%E7%A0%96%E5%A2%99/" rel="prev" title="554. 砖墙">
+      <i class="fa fa-chevron-left"></i> 554. 砖墙
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/05/05/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86-%E5%B9%B6%E5%8F%91/" rel="next" title="rust基础知识-并发">
+      rust基础知识-并发 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -306,7 +343,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">代码</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A2%AF%E5%AD%90%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">梯子的重要性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%86%E5%A4%87clash%E7%9A%84%E7%8E%AF%E5%A2%83"><span class="nav-number">2.</span> <span class="nav-text">准备clash的环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEclash.service"><span class="nav-number">3.</span> <span class="nav-text">设置clash.service</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -322,20 +359,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

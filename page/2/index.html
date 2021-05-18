@@ -20,33 +20,28 @@
     var CONFIG = {"hostname":"visualvk.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="题目链接 大意 给定一颗二叉搜索树的树型，以及一组数据，要求将这一组数据填充到该树型中，在层次遍历这棵树 思路  将数据从小到大排序 通过先序遍历（递归型），依次将数据填入即可  可能有人会问这里为什么按先序遍历填入就可以？ 首先，我们要认识到二叉搜索树的特点，左孩子比根节点小，右孩子比根节点大 所以，通过先序遍历，依次将排序好的数组填入，刚好就可以满足要求  最后，通过b">
-<meta property="og:type" content="article">
-<meta property="og:title" content="1099 Build A Binary Search Tree题解">
-<meta property="og:url" content="https://visualvk.github.io/2021/03/11/1099-Build-A-Binary-Search-Tree%E9%A2%98%E8%A7%A3/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="visualVk blog">
+<meta property="og:url" content="https://visualvk.github.io/page/2/index.html">
 <meta property="og:site_name" content="visualVk blog">
-<meta property="og:description" content="题目链接 大意 给定一颗二叉搜索树的树型，以及一组数据，要求将这一组数据填充到该树型中，在层次遍历这棵树 思路  将数据从小到大排序 通过先序遍历（递归型），依次将数据填入即可  可能有人会问这里为什么按先序遍历填入就可以？ 首先，我们要认识到二叉搜索树的特点，左孩子比根节点小，右孩子比根节点大 所以，通过先序遍历，依次将排序好的数组填入，刚好就可以满足要求  最后，通过b">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-03-11T13:41:32.000Z">
-<meta property="article:modified_time" content="2021-03-11T14:53:04.134Z">
 <meta property="article:author" content="visualVk">
-<meta property="article:tag" content="tree">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://visualvk.github.io/2021/03/11/1099-Build-A-Binary-Search-Tree%E9%A2%98%E8%A7%A3/">
+<link rel="canonical" href="https://visualvk.github.io/page/2/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : false,
-    isPost : true,
+    isHome : true,
+    isPost : false,
     lang   : 'en'
   };
 </script>
 
-  <title>1099 Build A Binary Search Tree题解 | visualVk blog</title>
+  <title>visualVk blog</title>
   
 
 
@@ -154,14 +149,13 @@
         <div class="content-wrap">
           
 
-          <div class="content post posts-expand">
+          <div class="content index posts-expand">
             
-
-    
+      
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/03/11/1099-Build-A-Binary-Search-Tree%E9%A2%98%E8%A7%A3/">
+    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/03/11/leetcode/1099-Build-A-Binary-Search-Tree%E9%A2%98%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/icandoit.jpg">
@@ -173,9 +167,10 @@
       <meta itemprop="name" content="visualVk blog">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          1099 Build A Binary Search Tree题解
-        </h1>
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/11/leetcode/1099-Build-A-Binary-Search-Tree%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">1099 Build A Binary Search Tree题解</a>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -208,7 +203,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><a target="_blank" rel="noopener" href="http://localhost:4000/2021/03/08/article-title/">题目链接</a></p>
+          <p><a target="_blank" rel="noopener" href="http://localhost:4000/2021/03/08/article-title/">题目链接</a></p>
 <h2 id="大意">大意</h2>
 <p>给定一颗二叉搜索树的树型，以及一组数据，要求将这一组数据填充到该树型中，在层次遍历这棵树</p>
 <h2 id="思路">思路</h2>
@@ -225,38 +220,205 @@
 <h2 id="代码">代码</h2>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * @Author: your name</span></span><br><span class="line"><span class="comment"> * @Date: 2020-07-30 18:03:45</span></span><br><span class="line"><span class="comment"> * @LastEditTime: 2021-03-11 21:28:46</span></span><br><span class="line"><span class="comment"> * @LastEditors: Please set LastEditors</span></span><br><span class="line"><span class="comment"> * @Description: In User Settings Edit</span></span><br><span class="line"><span class="comment"> * @FilePath: \datastruct_kaoyan\main.cpp</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> debug</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> dbg(x) cout &lt;&lt; #x &lt;&lt; <span class="meta-string">&quot; = &quot;</span> &lt;&lt; (x) &lt;&lt; endl;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">pair</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; pii;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">pair</span>&lt;ll, ll&gt; PLL;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">pair</span>&lt;<span class="keyword">int</span>, ll&gt; Pil;</span><br><span class="line"><span class="keyword">const</span> ll INF = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> inf = <span class="number">1e8</span> + <span class="number">100</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> eps = <span class="number">1e-8</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">1e5</span> + <span class="number">100</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1e3</span> + <span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> ll mod = <span class="number">1e9</span> + <span class="number">7</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> cur)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">()</span></span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> &#123;</span></span><br><span class="line">  <span class="keyword">int</span> left, right, data;</span><br><span class="line">  node() &#123;&#125;</span><br><span class="line">  node(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> d) : left(l), right(r), data(d) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">vector</span>&lt;node&gt; tree;</span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; tree_value;</span><br><span class="line"><span class="keyword">int</span> ind;</span><br><span class="line"><span class="comment">// solve</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> n;</span><br><span class="line">  ind = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">  tree.assign(n, node(<span class="number">-1</span>, <span class="number">-1</span>, <span class="number">0</span>));</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    <span class="keyword">int</span> left, right;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;left, &amp;right);</span><br><span class="line">    <span class="comment">// printf(&quot;left:%d,right:%d\n&quot;, left, right);</span></span><br><span class="line">    tree[i] = node(left, right, <span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    <span class="keyword">int</span> temp;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;temp);</span><br><span class="line">    tree_value.push_back(temp);</span><br><span class="line">  &#125;</span><br><span class="line">  sort(tree_value.begin(), tree_value.end());</span><br><span class="line">  dfs(<span class="number">0</span>);</span><br><span class="line">  bfs();</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> cur)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (tree[cur].left == <span class="number">-1</span> &amp;&amp; tree[cur].right == <span class="number">-1</span>) &#123;</span><br><span class="line">    tree[cur].data = tree_value[ind++];</span><br><span class="line">    <span class="comment">// printf(&quot;cur:%d,value:%d\n&quot;, cur, tree[cur].data);</span></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (tree[cur].left != <span class="number">-1</span>)</span><br><span class="line">    dfs(tree[cur].left);</span><br><span class="line">  tree[cur].data = tree_value[ind++];</span><br><span class="line">  <span class="comment">// printf(&quot;cur:%d,value:%d\n&quot;, cur, tree[cur].data);</span></span><br><span class="line">  <span class="keyword">if</span> (tree[cur].right != <span class="number">-1</span>)</span><br><span class="line">    dfs(tree[cur].right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; que;</span><br><span class="line">  que.push(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">while</span> (!que.empty()) &#123;</span><br><span class="line">    <span class="keyword">int</span> top = que.front();</span><br><span class="line">    que.pop();</span><br><span class="line">    <span class="keyword">if</span> (top == <span class="number">-1</span>)</span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    <span class="keyword">if</span> (top == <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, tree[top].data);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot; %d&quot;</span>, tree[top].data);</span><br><span class="line">    &#125;</span><br><span class="line">    que.push(tree[top].left);</span><br><span class="line">    que.push(tree[top].right);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// main</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// ios_base::sync_with_stdio(false);</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> debug</span></span><br><span class="line">  freopen(<span class="string">&quot;in.txt&quot;</span>, <span class="string">&quot;r&quot;</span>, <span class="built_in">stdin</span>);</span><br><span class="line"><span class="comment">//	freopen(&quot;out.txt&quot;,&quot;w&quot;,stdout);</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">  <span class="comment">// cin.tie(0);</span></span><br><span class="line">  <span class="comment">// cout.tie(0);</span></span><br><span class="line">  solve();</span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">          #ifdef debug</span></span><br><span class="line"><span class="comment">                  fclose(stdin);</span></span><br><span class="line"><span class="comment">                  fclose(stdout);</span></span><br><span class="line"><span class="comment">                  system(&quot;out.txt&quot;);</span></span><br><span class="line"><span class="comment">          #endif</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+      
     </div>
 
     
     
     
-
       <footer class="post-footer">
-          
-          <div class="post-tags">
-              <a href="/tags/tree/" rel="tag"><i class="fa fa-tag"></i> tree</a>
-          </div>
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2021/03/08/131-%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2II/" rel="prev" title="131. 分割回文串II">
-      <i class="fa fa-chevron-left"></i> 131. 分割回文串II
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/03/15/1106-Lowest-Price-in-Supply-Chain/" rel="next" title="1106 Lowest Price in Supply Chain">
-      1106 Lowest Price in Supply Chain <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
+        <div class="post-eof"></div>
       </footer>
-    
   </article>
   
   
   
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/03/08/leetcode/131-%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2II/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icandoit.jpg">
+      <meta itemprop="name" content="visualVk">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="visualVk blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/08/leetcode/131-%E5%88%86%E5%89%B2%E5%9B%9E%E6%96%87%E4%B8%B2II/" class="post-title-link" itemprop="url">131. 分割回文串II</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-08 10:27:51" itemprop="dateCreated datePublished" datetime="2021-03-08T10:27:51+08:00">2021-03-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-03-11 23:00:45" itemprop="dateModified" datetime="2021-03-11T23:00:45+08:00">2021-03-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/palindrome-partitioning-ii/">题目地址</a></p>
+<h2 id="思路">思路：</h2>
+<ul>
+<li>先定义一个<span class="math inline">\(dp[i][j]\)</span> = 字符串<span class="math inline">\(s\)</span>中<span class="math inline">\(i\)</span>到<span class="math inline">\(j\)</span>部分的子串是否为回文</li>
+<li><span class="math inline">\(dp[i][j]\)</span>需要从后往前遍历，这个是个注意点，如果从前往后，会出现如下情况
+<ul>
+<li>当我要判断0-3这一段字串是否为回文时，会使用到[1,1]这个区间的字串是否会回文，而由于是从前完后，所以再0<span class="math inline">\(\rightarrow\)</span>n遍历完之前，[1,1]这一段是没有做过处理，也就不知道是否为回文</li>
+</ul></li>
+<li>然后，我们再定义一个<span class="math inline">\(ans[i]\)</span>=前i个分割成回文的最小次数，其中会遇到两种情况
+<ul>
+<li><span class="math inline">\(dp[0][i]\)</span>=回文，不用分割，既为回文，所以<span class="math inline">\(ans[i]=0\)</span></li>
+<li><span class="math inline">\(dp[0][i]\ne\)</span>回文，我们需要遍历[0,i]区间，找到一个分界点，从这个分界点，分成两个回文
+<ul>
+<li>转移方程：<span class="math inline">\(ans[i] = min(ans[i], ans[j]),when\)</span> <span class="math inline">\(0&lt;j&lt;i,dp[j+1][i]=\)</span>回文</li>
+<li>j+1是因为，ans[i]的第一是前i个分割成回文的最小次数，所以要判断[j+1,i]区间是否为回文</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="代码">代码</h2>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minCut</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">int</span> n = s.length();</span><br><span class="line">      <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; dp(n, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(n,<span class="number">1</span>));</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> i = n<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = i+<span class="number">1</span>;j&lt;n;j++)&#123;</span><br><span class="line">          dp[i][j] = dp[i+<span class="number">1</span>][j<span class="number">-1</span>] &amp; (s[i] == s[j]);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;ans(n,INT_MAX);</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(dp[<span class="number">0</span>][i])&#123;</span><br><span class="line">          ans[i] = <span class="number">0</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j&lt;i;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(dp[j+<span class="number">1</span>][i])&#123;</span><br><span class="line">              ans[i] = min(ans[i], ans[j] + <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> ans[n<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/03/08/hello-world/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icandoit.jpg">
+      <meta itemprop="name" content="visualVk">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="visualVk blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/08/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-08 10:19:39" itemprop="dateCreated datePublished" datetime="2021-03-08T10:19:39+08:00">2021-03-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-05-04 18:31:14" itemprop="dateModified" datetime="2021-05-04T18:31:14+08:00">2021-05-04</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="create-a-new-post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="run-server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="generate-static-files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>linux mint</p>
+<ul>
+<li>zsh: jspwoso</li>
+<li>桌面：Qoqir+Qoair icon</li>
+</ul>
+<p>windown-oh-my-push:</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Set</span>-Prompt</span><br><span class="line"># PROFILE</span><br><span class="line"><span class="keyword">if</span> (!(Test-<span class="built_in">Path</span> -<span class="built_in">Path</span> $PROFILE )) &#123;New-Item -<span class="built_in">Type</span> File -<span class="built_in">Path</span> $PROFILE -Force &#125;</span><br><span class="line"># 使用 VSCode 打开（没有的话，装一个）</span><br><span class="line">code $PROFILE</span><br><span class="line">#打开后加入以下内容</span><br><span class="line"><span class="built_in">Set</span>-Theme Agnoster</span><br><span class="line">Import-Module posh-git</span><br><span class="line">Import-Module oh-my-posh</span><br><span class="line">Import-Module &quot;$($(Get-Item $(Get-Command scoop).<span class="built_in">Path</span>).Directory.Parent.FullName)\modules\scoop-completion&quot;</span><br><span class="line">#保存后，推出，输入下述命令</span><br><span class="line"><span class="built_in">echo</span> $profile</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\<span class="number">20481</span>&gt; # 使用 VSCode 打开没有的话装一个</span><br><span class="line">PS C:\Users\<span class="number">20481</span>&gt; code $PROFILE</span><br><span class="line"></span><br><span class="line">[main <span class="number">2021</span>-<span class="number">05</span>-<span class="number">04</span>T10:<span class="number">29</span>:<span class="number">00</span>.<span class="number">987</span>Z] update#setState idle</span><br><span class="line">(node:<span class="number">1048</span>) electron: The default of contextIsolation is deprecated and will be changing from false to true <span class="keyword">in</span> a future release of Electron.  See https://github.com/electron/electron/issues/<span class="number">23506</span> <span class="keyword">for</span> <span class="built_in">more</span> information</span><br><span class="line">(node:<span class="number">1048</span>) electron: The default of contextIsolation is deprecated and will be changing from false to true <span class="keyword">in</span> a future release of Electron.  See https://github.com/electron/electron/issues/<span class="number">23506</span> <span class="keyword">for</span> <span class="built_in">more</span> information</span><br><span class="line">(node:<span class="number">14672</span>) Electron: Loading non-context-aware native module <span class="keyword">in</span> renderer: &#x27;\\?\D:\Microsoft VS Code\resources\app\node_modules.asar.unpacked\spdlog\build\Release\spdlog.node&#x27;. This is deprecated, see https://github.com/electron/electron/issues/<span class="number">18397</span>.</span><br><span class="line">PS C:\Users\<span class="number">20481</span>&gt; <span class="built_in">echo</span> $profile</span><br><span class="line"><span class="function">C:\<span class="title">Users</span>\20481\<span class="title">Documents</span>\<span class="title">WindowsPowerShell</span>\<span class="title">Microsoft.PowerShell_profile.ps1</span></span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
 
 
 
@@ -308,7 +470,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E6%84%8F"><span class="nav-number">1.</span> <span class="nav-text">大意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -324,20 +485,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

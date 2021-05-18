@@ -20,20 +20,21 @@
     var CONFIG = {"hostname":"visualvk.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="题目链接 分析 使用动态规划解决  为什么？  题目要求求得是子序列在原字符串的个数，是不是可以首先联想到最长共子序列？ 其次，通过样例，\(s&#x3D;&#39;rabbbit&#39;,t&#x3D;&#39;rabbit&#39;\)，我们可以得到对于\(t\)之前的字符，\(rabi,rabbi,rabbbi\)均可以通过删除或者不删除多余的字符，得到\(rabbit\)，而中间我们可以看到一">
+  <meta name="description" content="所有权 一种管理变量的所定义的名词，它可以完成GC的垃圾回收功能（有点不同）。任何变量只属于一个所有者，超出所有者的scope就失效。 Copy和Drop 简单数据类型均具有copy，另外tuple中如果没有一个数据类型实现了drop方法，那么tuple就是Copy，但是，只要tuple中存在一个数据类型实现了drop，那么他就不再式Copy Drop作用于指针引用上，也就是涉及heap的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="115. 不同的子序列">
-<meta property="og:url" content="https://visualvk.github.io/2021/03/17/115-%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97/index.html">
+<meta property="og:title" content="rust-所有权">
+<meta property="og:url" content="https://visualvk.github.io/2021/04/24/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/rust-%E6%89%80%E6%9C%89%E6%9D%83/index.html">
 <meta property="og:site_name" content="visualVk blog">
-<meta property="og:description" content="题目链接 分析 使用动态规划解决  为什么？  题目要求求得是子序列在原字符串的个数，是不是可以首先联想到最长共子序列？ 其次，通过样例，\(s&#x3D;&#39;rabbbit&#39;,t&#x3D;&#39;rabbit&#39;\)，我们可以得到对于\(t\)之前的字符，\(rabi,rabbi,rabbbi\)均可以通过删除或者不删除多余的字符，得到\(rabbit\)，而中间我们可以看到一">
+<meta property="og:description" content="所有权 一种管理变量的所定义的名词，它可以完成GC的垃圾回收功能（有点不同）。任何变量只属于一个所有者，超出所有者的scope就失效。 Copy和Drop 简单数据类型均具有copy，另外tuple中如果没有一个数据类型实现了drop方法，那么tuple就是Copy，但是，只要tuple中存在一个数据类型实现了drop，那么他就不再式Copy Drop作用于指针引用上，也就是涉及heap的">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-03-17T03:33:03.000Z">
-<meta property="article:modified_time" content="2021-03-17T04:36:25.827Z">
+<meta property="article:published_time" content="2021-04-24T07:46:37.000Z">
+<meta property="article:modified_time" content="2021-04-24T08:05:37.504Z">
 <meta property="article:author" content="visualVk">
-<meta property="article:tag" content="dp">
+<meta property="article:tag" content="rust">
+<meta property="article:tag" content="所有权">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://visualvk.github.io/2021/03/17/115-%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97/">
+<link rel="canonical" href="https://visualvk.github.io/2021/04/24/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/rust-%E6%89%80%E6%9C%89%E6%9D%83/">
 
 
 <script id="page-configurations">
@@ -46,7 +47,7 @@
   };
 </script>
 
-  <title>115. 不同的子序列 | visualVk blog</title>
+  <title>rust-所有权 | visualVk blog</title>
   
 
 
@@ -161,7 +162,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/03/17/115-%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97/">
+    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/04/24/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/rust-%E6%89%80%E6%9C%89%E6%9D%83/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/icandoit.jpg">
@@ -174,7 +175,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          115. 不同的子序列
+          rust-所有权
         </h1>
 
         <div class="post-meta">
@@ -185,7 +186,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-03-17 11:33:03 / Modified: 12:36:25" itemprop="dateCreated datePublished" datetime="2021-03-17T11:33:03+08:00">2021-03-17</time>
+              <time title="Created: 2021-04-24 15:46:37 / Modified: 16:05:37" itemprop="dateCreated datePublished" datetime="2021-04-24T15:46:37+08:00">2021-04-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -193,7 +194,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                  <a href="/categories/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">rust基础知识学习</span></a>
                 </span>
             </span>
 
@@ -208,47 +209,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/distinct-subsequences/">题目链接</a></p>
-<h2 id="分析">分析</h2>
-<p>使用动态规划解决</p>
-<ul>
-<li>为什么？
-<ul>
-<li>题目要求求得是<strong>子序列</strong>在原字符串的<strong>个数</strong>，是不是可以首先联想到最长共子序列？</li>
-<li>其次，通过样例，<span class="math inline">\(s=&#39;rabbbit&#39;,t=&#39;rabbit&#39;\)</span>，我们可以得到对于<span class="math inline">\(t\)</span>之前的字符，<span class="math inline">\(rabi,rabbi,rabbbi\)</span>均可以通过删除或者不删除多余的字符，得到<span class="math inline">\(rabbit\)</span>，而中间我们可以看到一些相关联的地方，<span class="math inline">\(rabbi\)</span>包含<span class="math inline">\(rabi\)</span>，也就是说，<span class="math inline">\(rabbi\)</span>可以从<span class="math inline">\(rabi\)</span>的状态转出</li>
-<li>综上，可以大致定下，使用动态规划解决该问题</li>
-</ul></li>
-<li>如何解决？
-<ul>
-<li>进行如下定义：
-<ul>
-<li>首先，<span class="math inline">\(dp[i][j],1\le i \le t.length(),1\le j \le s.length()\)</span>，这样就不需要考虑越界问题了</li>
-<li>其次，<span class="math inline">\(dp[i][j]=\)</span>在<span class="math inline">\(s\)</span>字符串中<span class="math inline">\([0,j-1]\)</span>部分中的子序列，为<span class="math inline">\(t\)</span>字符串中<span class="math inline">\([0,i-1]\)</span>部分的子串的个数</li>
-<li>另外，当<span class="math inline">\(i=1\)</span>，即<span class="math inline">\(t\)</span>的子串是空串时，<span class="math inline">\(dp[i][j]=1\)</span></li>
-</ul></li>
-<li>状态转移方程
-<ul>
-<li><span class="math display">\[dp[i][j] = \left\{\begin{align}
-  dp[i-1][j-1] +dp[i][j-1],t[i-1] = s[j-1]\\
-  dp[i][j-1],t[i-1]\ne s[j-1]\\
-\end{align}\right.\]</span></li>
-<li>方程的解释：
-<ul>
-<li><span class="math inline">\(t[i-1] = s[j-1]\)</span>时，说明<span class="math inline">\(dp[i][j]\)</span>的可以有两种地方转化过来，
-<ol type="1">
-<li><span class="math inline">\(dp[i-1][j-1]\)</span>：这种情况下假设的是，<span class="math inline">\(t[i-1]=s[j-1]\)</span></li>
-<li><span class="math inline">\(dp[i][j-1]\)</span>：这种情况假设的是<span class="math inline">\(t[i]=s[j-1]\)</span></li>
-</ol></li>
-<li><span class="math inline">\(t[i-1]\ne s[j-1]\)</span>时
-<ul>
-<li>就算<span class="math inline">\(t[i-2]=s[j-2]\)</span>，但由于<span class="math inline">\(t[i-1]\ne s[j-1]\)</span>，在<span class="math inline">\(s[0,j-1]\)</span>都找不到<span class="math inline">\(t[0,i-1]\)</span>的子序列，也就不够可能从<span class="math inline">\(dp[i-1][j-1]\)</span>的状态转移过来</li>
-<li>所以只可能是从<span class="math inline">\(t[i-1]=s[j-2]\)</span>情况，即<span class="math inline">\(dp[i][j-1]\)</span>的状态转移过来</li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numDistinct</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line">      <span class="keyword">int</span> len1 = s.length(), len2 = t.length();</span><br><span class="line">      <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;ll&gt;&gt;dp(len2+<span class="number">1</span>,<span class="built_in">vector</span>&lt;ll&gt;(len1+<span class="number">1</span>,<span class="number">0</span>));</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;len1 + <span class="number">1</span>;i++)&#123;</span><br><span class="line">        dp[<span class="number">0</span>][i] = <span class="number">1</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i&lt;=len2;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>;j&lt;=len1;j++)&#123;</span><br><span class="line">          <span class="keyword">if</span>(t[i<span class="number">-1</span>] == s[j<span class="number">-1</span>])&#123;</span><br><span class="line">            dp[i][j] = dp[i<span class="number">-1</span>][j<span class="number">-1</span>] + dp[i][j<span class="number">-1</span>];</span><br><span class="line">          &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            dp[i][j] = dp[i][j<span class="number">-1</span>];</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> dp[len2][len1];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+        <h1 id="所有权">所有权</h1>
+<p>一种管理变量的所定义的名词，它可以完成GC的垃圾回收功能（有点不同）。任何变量只属于一个所有者，超出所有者的scope就失效。</p>
+<h1 id="copy和drop">Copy和Drop</h1>
+<p>简单数据类型均具有copy，另外tuple中如果没有一个数据类型实现了drop方法，那么tuple就是Copy，但是，只要tuple中存在一个数据类型实现了drop，那么他就不再式Copy</p>
+<p>Drop作用于指针引用上，也就是涉及heap的数据类型。如，想要一个String类型，s1 = s2,就意味着值发生了移动（move），s2在赋值后，失效，后续代码中使用s2均会报错</p>
+<h1 id="引用和借用">引用和借用</h1>
+<p>引用：引用值，而不引用所有权</p>
+<p>借用：将引用作为参数的行为，称为借用</p>
 
     </div>
 
@@ -259,7 +227,8 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/dp/" rel="tag"><i class="fa fa-tag"></i> dp</a>
+              <a href="/tags/rust/" rel="tag"><i class="fa fa-tag"></i> rust</a>
+              <a href="/tags/%E6%89%80%E6%9C%89%E6%9D%83/" rel="tag"><i class="fa fa-tag"></i> 所有权</a>
           </div>
 
         
@@ -268,12 +237,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/03/16/1107-Social-Clusters/" rel="prev" title="1107 Social Clusters">
-      <i class="fa fa-chevron-left"></i> 1107 Social Clusters
+    <a href="/2021/04/04/leetcode/%E6%A3%AE%E6%9E%97%E4%B8%AD%E7%9A%84%E5%85%94%E5%AD%90/" rel="prev" title="781.森林中的兔子">
+      <i class="fa fa-chevron-left"></i> 781.森林中的兔子
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/04/04/%E6%A3%AE%E6%9E%97%E4%B8%AD%E7%9A%84%E5%85%94%E5%AD%90/" rel="next" title="781.森林中的兔子">
-      781.森林中的兔子 <i class="fa fa-chevron-right"></i>
+    <a href="/2021/04/28/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/rust%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" rel="next" title="rust单元测试">
+      rust单元测试 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -333,7 +302,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">分析</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%80%E6%9C%89%E6%9D%83"><span class="nav-number">1.</span> <span class="nav-text">所有权</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#copy%E5%92%8Cdrop"><span class="nav-number">2.</span> <span class="nav-text">Copy和Drop</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E5%92%8C%E5%80%9F%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">引用和借用</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -349,20 +318,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
