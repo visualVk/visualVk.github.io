@@ -155,6 +155,123 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/05/28/linux/linux-%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icandoit.jpg">
+      <meta itemprop="name" content="visualVk">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="visualVk blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/28/linux/linux-%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">linux-文件目录学习</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-05-28 14:08:09" itemprop="dateCreated datePublished" datetime="2021-05-28T14:08:09+08:00">2021-05-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-05-31 19:21:10" itemprop="dateModified" datetime="2021-05-31T19:21:10+08:00">2021-05-31</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">linux学习</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="文件目录">文件目录</h1>
+<ul>
+<li>/bin：常用指令的存放地</li>
+<li>/sbin：super bin，意味着管理员才能使用的命令</li>
+<li>/home：普通用户的主目录</li>
+<li>/root：管理员的主目录</li>
+<li>/boot：启动linux所需要的核心文件</li>
+<li>proc：虚拟目录，是系统内存的映射</li>
+<li>/srv：service，存放服务启动后提取的数据</li>
+<li>/sys：文件系统</li>
+<li>/tmp：临时文件</li>
+<li>/media：自动识别出来的一些设备</li>
+<li>/mnt：挂载的地点</li>
+<li>/opt：给主机额外安装软件所摆放的目录</li>
+<li>/var：一般会放置日志文件</li>
+<li>/selinux：是一中安全的子系统，他能控制程序只能访问特定文件</li>
+</ul>
+<h1 id="rwx">RWX</h1>
+<ul>
+<li>R(read)=读
+<ul>
+<li>对于文件夹来讲，表示可以删除、列出文件</li>
+<li>对于文件来讲，表示可以读取</li>
+</ul></li>
+<li>W(write)=写
+<ul>
+<li>对于文件夹来讲，可以创建文件夹</li>
+<li>对于文件来讲，额可以写入</li>
+</ul></li>
+<li>X(excute)=执行
+<ul>
+<li>对于文件夹来讲，可以进入目录</li>
+<li>对于文件来讲，可以执行文件</li>
+</ul></li>
+</ul>
+<h2 id="分区挂载卸载">分区&amp;挂载&amp;卸载</h2>
+<p>查看硬盘或分区</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsblk # 或者使用lsblk -f</span><br></pre></td></tr></table></figure>
+<p>对硬盘分区</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cfdisk /dev/sdx # sdx中的x可以代表a,b,c,d</span><br></pre></td></tr></table></figure>
+<p>挂载(<strong>需要注意，命令行下的挂载重启后会失效，如果想永久生效，需要修改/etc/fstab中的映射关系</strong>)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 需要先自己添加目录</span></span><br><span class="line">mkdir newdiskdir # 假设创建在/（根目录）下</span><br><span class="line">mount /dev/sda1 /newdiskdir</span><br></pre></td></tr></table></figure>
+<p>卸载</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">umount /dev/sda1</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/05/05/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%AD%A6%E4%B9%A0/rust%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86-%E5%B9%B6%E5%8F%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -279,7 +396,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-03 18:31:44" itemprop="dateModified" datetime="2021-05-03T18:31:44+08:00">2021-05-03</time>
+                <time title="Modified: 2021-05-07 19:23:12" itemprop="dateModified" datetime="2021-05-07T19:23:12+08:00">2021-05-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -311,7 +428,7 @@
 <p><a target="_blank" rel="noopener" href="https://github.com/Dreamacro/clash">clash的github</a></p>
 <p>选择需要的版本，下图是我选择的</p>
 <figure>
-<img src="D:\coding\github_blogger\source_posts\linux\img\clash_version_selected.png" alt="" /><figcaption>clash_version_selected</figcaption>
+<img src="D:\coding\github_blogger\source_posts\linux\img\clash_version_selected.png" alt="clash_version_selected" /><figcaption aria-hidden="true">clash_version_selected</figcaption>
 </figure>
 <p><strong>注意：如果出现github连接失败，选择自己去github上手动下载吧</strong></p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">wget</span> https://github.com/Dreamacro/clash/releases/download/v1.<span class="number">5.0</span>/clash<span class="literal">-linux</span><span class="literal">-amd64</span><span class="literal">-v1</span>.<span class="number">5.0</span>.gz</span><br></pre></td></tr></table></figure>
@@ -341,6 +458,7 @@
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#systemctl start clash@用户名，如我的用户名为visualvk则</span></span><br><span class="line">systemctl <span class="built_in">start</span> clash@visualvk</span><br></pre></td></tr></table></figure>
 <p>查看服务</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status clash@visualvk</span><br></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gnome-settings-daemon</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -956,89 +1074,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/03/15/leetcode/1106-Lowest-Price-in-Supply-Chain/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/icandoit.jpg">
-      <meta itemprop="name" content="visualVk">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="visualVk blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/15/leetcode/1106-Lowest-Price-in-Supply-Chain/" class="post-title-link" itemprop="url">1106 Lowest Price in Supply Chain</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-03-15 22:04:57 / Modified: 22:21:12" itemprop="dateCreated datePublished" datetime="2021-03-15T22:04:57+08:00">2021-03-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/pat/" itemprop="url" rel="index"><span itemprop="name">pat</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a target="_blank" rel="noopener" href="https://pintia.cn/problem-sets/994805342720868352/problems/994805362341822464">题目链接</a></p>
-<h2 id="题目大意">题目大意</h2>
-<p>供应商以价格<span class="math inline">\(P\)</span>提供产品，经销商和零售商分别以<span class="math inline">\(r\)</span>%的利润销售给别人，而其中只有零售商可以销售给顾客，求可以从几家零售商处获得最低价格的商品</p>
-<h2 id="分析">分析</h2>
-<p>我个人是将这个题目理解成图，求最短路，首先进行如下定义</p>
-<ul>
-<li>供应商为源端</li>
-<li>零售商为终点</li>
-<li>经销商为中介点</li>
-<li>路径为有向边</li>
-<li>每一条点与点之间的路径长度为1</li>
-</ul>
-<p>所以，我们可以讲问题转换成，从源点出发，经过中介点，到终点的最近距离<span class="math inline">\(d\)</span></p>
-<p>得到<span class="math inline">\(d\)</span>后，根据路径长度跟利润的关系求得最低费用，<span class="math inline">\(cost=p\times(1+r\%)^{d}\)</span></p>
-<h2 id="代码">代码</h2>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> debug</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> dbg(x) cout &lt;&lt; #x &lt;&lt; <span class="meta-string">&quot; = &quot;</span> &lt;&lt; (x) &lt;&lt; endl;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">pair</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; pii;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">pair</span>&lt;ll, ll&gt; PLL;</span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">pair</span>&lt;<span class="keyword">int</span>, ll&gt; Pil;</span><br><span class="line"><span class="keyword">const</span> ll INF = <span class="number">0x3f3f3f3f</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> inf = <span class="number">1e8</span> + <span class="number">100</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">double</span> eps = <span class="number">1e-8</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">1e5</span> + <span class="number">100</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1e3</span> + <span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> ll mod = <span class="number">1e9</span> + <span class="number">7</span>;</span><br><span class="line"><span class="built_in">vector</span>&lt;pii&gt; G[maxn];</span><br><span class="line"><span class="keyword">int</span> dist[maxn];</span><br><span class="line"><span class="comment">// solve</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> n;</span><br><span class="line">  <span class="keyword">double</span> p, r;</span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; retails;</span><br><span class="line">  <span class="built_in">memset</span>(dist, <span class="number">0x3f3f3f3f</span>, <span class="keyword">sizeof</span>(dist));</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%d%lf%lf&quot;</span>, &amp;n, &amp;p, &amp;r);</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    <span class="keyword">int</span> k;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;k);</span><br><span class="line">    <span class="keyword">if</span> (k == <span class="number">0</span>)</span><br><span class="line">      retails.push_back(i); <span class="comment">//零售商加入数组==终点集</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; k; j++) &#123;</span><br><span class="line">      <span class="keyword">int</span> u = i, v;</span><br><span class="line">      <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;v);</span><br><span class="line">      G[u].push_back(&#123;v, <span class="number">1</span>&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//最短路</span></span><br><span class="line">  <span class="built_in">priority_queue</span>&lt;pii&gt; pq;</span><br><span class="line">  dist[<span class="number">0</span>] = <span class="number">0.0</span>;</span><br><span class="line">  pq.push(&#123;<span class="number">0</span>, <span class="number">0</span>&#125;);</span><br><span class="line">  <span class="keyword">while</span> (!pq.empty()) &#123;</span><br><span class="line">    pii p = pq.top();</span><br><span class="line">    pq.pop();</span><br><span class="line">    <span class="keyword">if</span> (dist[p.first] &lt; p.second)</span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;e : G[p.first]) &#123;</span><br><span class="line">      <span class="keyword">if</span> (dist[e.first] &gt; dist[p.first] + e.second) &#123;</span><br><span class="line">        dist[e.first] = dist[p.first] + e.second;</span><br><span class="line">        pq.push(&#123;e.first, dist[e.first]&#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">int</span> min_v = INF, cnt = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;v : retails) &#123;</span><br><span class="line">    <span class="keyword">if</span> (min_v &gt; dist[v]) &#123;</span><br><span class="line">      min_v = dist[v];</span><br><span class="line">      cnt = <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (min_v == dist[v]) &#123;</span><br><span class="line">      cnt++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%.4lf %d\n&quot;</span>, <span class="built_in">pow</span>(r / <span class="number">100</span> + <span class="number">1</span>, min_v) * p, cnt);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// main</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// ios_base::sync_with_stdio(false);</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> debug</span></span><br><span class="line">  freopen(<span class="string">&quot;in.txt&quot;</span>, <span class="string">&quot;r&quot;</span>, <span class="built_in">stdin</span>);</span><br><span class="line"><span class="comment">//	freopen(&quot;out.txt&quot;,&quot;w&quot;,stdout);</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">  <span class="comment">// cin.tie(0);</span></span><br><span class="line">  <span class="comment">// cout.tie(0);</span></span><br><span class="line">  solve();</span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">          #ifdef debug</span></span><br><span class="line"><span class="comment">                  fclose(stdin);</span></span><br><span class="line"><span class="comment">                  fclose(stdout);</span></span><br><span class="line"><span class="comment">                  system(&quot;out.txt&quot;);</span></span><br><span class="line"><span class="comment">          #endif</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1110,14 +1145,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
