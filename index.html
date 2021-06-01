@@ -169,7 +169,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/05/28/linux/linux-%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">linux-文件目录学习</a>
+            <a href="/2021/05/28/linux/linux-%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">linux-文件系统学习</a>
         </h2>
 
         <div class="post-meta">
@@ -186,7 +186,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-31 19:21:10" itemprop="dateModified" datetime="2021-05-31T19:21:10+08:00">2021-05-31</time>
+                <time title="Modified: 2021-06-01 10:09:22" itemprop="dateModified" datetime="2021-06-01T10:09:22+08:00">2021-06-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -209,8 +209,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="文件目录">文件目录</h1>
-<ul>
+          <h1 id="文件目录"><a href="#文件目录" class="headerlink" title="文件目录"></a>文件目录</h1><ul>
 <li>/bin：常用指令的存放地</li>
 <li>/sbin：super bin，意味着管理员才能使用的命令</li>
 <li>/home：普通用户的主目录</li>
@@ -226,26 +225,24 @@
 <li>/var：一般会放置日志文件</li>
 <li>/selinux：是一中安全的子系统，他能控制程序只能访问特定文件</li>
 </ul>
-<h1 id="rwx">RWX</h1>
-<ul>
-<li>R(read)=读
-<ul>
+<h1 id="RWX"><a href="#RWX" class="headerlink" title="RWX"></a>RWX</h1><ul>
+<li>R(read)=读<ul>
 <li>对于文件夹来讲，表示可以删除、列出文件</li>
 <li>对于文件来讲，表示可以读取</li>
-</ul></li>
-<li>W(write)=写
-<ul>
+</ul>
+</li>
+<li>W(write)=写<ul>
 <li>对于文件夹来讲，可以创建文件夹</li>
 <li>对于文件来讲，额可以写入</li>
-</ul></li>
-<li>X(excute)=执行
-<ul>
+</ul>
+</li>
+<li>X(excute)=执行<ul>
 <li>对于文件夹来讲，可以进入目录</li>
 <li>对于文件来讲，可以执行文件</li>
-</ul></li>
 </ul>
-<h2 id="分区挂载卸载">分区&amp;挂载&amp;卸载</h2>
-<p>查看硬盘或分区</p>
+</li>
+</ul>
+<h1 id="分区-amp-挂载-amp-卸载"><a href="#分区-amp-挂载-amp-卸载" class="headerlink" title="分区&amp;挂载&amp;卸载"></a>分区&amp;挂载&amp;卸载</h1><p>查看硬盘或分区</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsblk # 或者使用lsblk -f</span><br></pre></td></tr></table></figure>
 <p>对硬盘分区</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cfdisk /dev/sdx # sdx中的x可以代表a,b,c,d</span><br></pre></td></tr></table></figure>
@@ -253,6 +250,13 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 需要先自己添加目录</span></span><br><span class="line">mkdir newdiskdir # 假设创建在/（根目录）下</span><br><span class="line">mount /dev/sda1 /newdiskdir</span><br></pre></td></tr></table></figure>
 <p>卸载</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">umount /dev/sda1</span><br></pre></td></tr></table></figure>
+<h1 id="磁盘占用率"><a href="#磁盘占用率" class="headerlink" title="磁盘占用率"></a>磁盘占用率</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df -h # 查看磁盘占用率，高于80%，需要清除空间，或是添加行硬盘</span><br></pre></td></tr></table></figure>
+<p><img src="./img/df-h.png" alt="du-h"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> -h 带单位</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -s 汇总</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> --max-depth=1 深度</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -a 含文件</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> -c 明细</span></span><br><span class="line">du # 查询指定目录，不携带目录，表示查询当前目录</span><br><span class="line"><span class="meta">#</span><span class="bash"> 例如使用以下指定</span></span><br><span class="line">du -hac --max-depth=1 /opt</span><br></pre></td></tr></table></figure>
+<p><img src="./img/du-hac--max-depth=1opt.png" alt="du-hac--max-depth=1opt"></p>
+<h1 id="文件计数"><a href="#文件计数" class="headerlink" title="文件计数"></a>文件计数</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 汇总/opt目录下所有文件加的数目</span></span><br><span class="line">ls -lR | grep &quot;^-&quot; | wc -l</span><br></pre></td></tr></table></figure>
+<p><img src="./img/ls-lRgrepwcl.png" alt="lslRgrepwcl"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 以树状图显示文件目录, 若没有tree，先安装tree</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 以archlinux为例：sudo pacman -S tree</span></span><br><span class="line">tree /opt</span><br></pre></td></tr></table></figure>
 
       
     </div>
