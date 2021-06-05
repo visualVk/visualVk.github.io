@@ -155,6 +155,121 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/03/17/leetcode/115-%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icandoit.jpg">
+      <meta itemprop="name" content="visualVk">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="visualVk blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/17/leetcode/115-%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97/" class="post-title-link" itemprop="url">115. 不同的子序列</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-17 11:33:03" itemprop="dateCreated datePublished" datetime="2021-03-17T11:33:03+08:00">2021-03-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-05-02 10:24:59" itemprop="dateModified" datetime="2021-05-02T10:24:59+08:00">2021-05-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/distinct-subsequences/">题目链接</a></p>
+<h1 id="分析">分析</h1>
+<p>使用动态规划解决</p>
+<ul>
+<li>为什么？
+<ul>
+<li>题目要求求得是<strong>子序列</strong>在原字符串的<strong>个数</strong>，是不是可以首先联想到最长共子序列？</li>
+<li>其次，通过样例，<span class="math inline">\(s=&#39;rabbbit&#39;,t=&#39;rabbit&#39;\)</span>，我们可以得到对于<span class="math inline">\(t\)</span>之前的字符，<span class="math inline">\(rabi,rabbi,rabbbi\)</span>均可以通过删除或者不删除多余的字符，得到<span class="math inline">\(rabbit\)</span>，而中间我们可以看到一些相关联的地方，<span class="math inline">\(rabbi\)</span>包含<span class="math inline">\(rabi\)</span>，也就是说，<span class="math inline">\(rabbi\)</span>可以从<span class="math inline">\(rabi\)</span>的状态转出</li>
+<li>综上，可以大致定下，使用动态规划解决该问题</li>
+</ul></li>
+<li>如何解决？
+<ul>
+<li>进行如下定义：
+<ul>
+<li>首先，<span class="math inline">\(dp[i][j],1\le i \le t.length(),1\le j \le s.length()\)</span>，这样就不需要考虑越界问题了</li>
+<li>其次，<span class="math inline">\(dp[i][j]=\)</span>在<span class="math inline">\(s\)</span>字符串中<span class="math inline">\([0,j-1]\)</span>部分中的子序列，为<span class="math inline">\(t\)</span>字符串中<span class="math inline">\([0,i-1]\)</span>部分的子串的个数</li>
+<li>另外，当<span class="math inline">\(i=1\)</span>，即<span class="math inline">\(t\)</span>的子串是空串时，<span class="math inline">\(dp[i][j]=1\)</span></li>
+</ul></li>
+<li>状态转移方程
+<ul>
+<li><span class="math display">\[dp[i][j] = \left\{\begin{align}
+  dp[i-1][j-1] +dp[i][j-1],t[i-1] = s[j-1]\\
+  dp[i][j-1],t[i-1]\ne s[j-1]\\
+\end{align}\right.\]</span></li>
+<li>方程的解释：
+<ul>
+<li><span class="math inline">\(t[i-1] = s[j-1]\)</span>时，说明<span class="math inline">\(dp[i][j]\)</span>的可以有两种地方转化过来，
+<ol type="1">
+<li><span class="math inline">\(dp[i-1][j-1]\)</span>：这种情况下假设的是，<span class="math inline">\(t[i-1]=s[j-1]\)</span></li>
+<li><span class="math inline">\(dp[i][j-1]\)</span>：这种情况假设的是<span class="math inline">\(t[i]=s[j-1]\)</span></li>
+</ol></li>
+<li><span class="math inline">\(t[i-1]\ne s[j-1]\)</span>时
+<ul>
+<li>就算<span class="math inline">\(t[i-2]=s[j-2]\)</span>，但由于<span class="math inline">\(t[i-1]\ne s[j-1]\)</span>，在<span class="math inline">\(s[0,j-1]\)</span>都找不到<span class="math inline">\(t[0,i-1]\)</span>的子序列，也就不够可能从<span class="math inline">\(dp[i-1][j-1]\)</span>的状态转移过来</li>
+<li>所以只可能是从<span class="math inline">\(t[i-1]=s[j-2]\)</span>情况，即<span class="math inline">\(dp[i][j-1]\)</span>的状态转移过来</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<h1 id="代码">代码</h1>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numDistinct</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line">      <span class="keyword">int</span> len1 = s.length(), len2 = t.length();</span><br><span class="line">      <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;ll&gt;&gt;dp(len2+<span class="number">1</span>,<span class="built_in">vector</span>&lt;ll&gt;(len1+<span class="number">1</span>,<span class="number">0</span>));</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;len1 + <span class="number">1</span>;i++)&#123;</span><br><span class="line">        dp[<span class="number">0</span>][i] = <span class="number">1</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i&lt;=len2;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>;j&lt;=len1;j++)&#123;</span><br><span class="line">          <span class="keyword">if</span>(t[i<span class="number">-1</span>] == s[j<span class="number">-1</span>])&#123;</span><br><span class="line">            dp[i][j] = dp[i<span class="number">-1</span>][j<span class="number">-1</span>] + dp[i][j<span class="number">-1</span>];</span><br><span class="line">          &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            dp[i][j] = dp[i][j<span class="number">-1</span>];</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> dp[len2][len1];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://visualvk.github.io/2021/03/16/leetcode/1107-Social-Clusters/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -653,7 +768,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
